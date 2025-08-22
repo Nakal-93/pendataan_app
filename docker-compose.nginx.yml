@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  # Nginx Web Server
+  nginx:
+    image: nginx:1.24-alpine
+    container_name: pendataan_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - php
+    networks:
+      - pendataan_network
+    restart: unless-stopped
+
+  # PHP-FPM
+  php:
+    build: 
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: pendataan_php
+    volumes:
+      - .:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=aplikasi_madiun
+      - DB_USER=root
+      - DB_PASS=rootpassword
+    networks:
+      - pendataan_network
+    restart: unless-stopped
+
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: pendataan_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: aplikasi_madiun
+      MYSQL_USER: pendataan_user
+      MYSQL_PASSWORD: pendataan_pass
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - pendataan_network
+    restart: unless-stopped
+
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pendataan_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    depends_on:
+      - db
+    networks:
+      - pendataan_network
+    restart: unless-stopped
+
+  # Redis Cache (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: pendataan_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - pendataan_network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+volumes:
+  db_data:
+  redis_data:
+
+networks:
+  pendataan_network:
+    driver: bridge

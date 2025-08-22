@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Tidak Ditemukan - Kabupaten Madiun</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .error-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 60px 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .error-code {
+            font-size: 8em;
+            font-weight: bold;
+            color: #e74c3c;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        .error-title {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .error-message {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 10px;
+            cursor: pointer;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(149, 165, 166, 0.3);
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #e74c3c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2em;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 40px 30px;
+            }
+            
+            .error-code {
+                font-size: 6em;
+            }
+            
+            .error-title {
+                font-size: 1.5em;
+            }
+            
+            .error-message {
+                font-size: 1em;
+            }
+            
+            .btn-home, .btn-back {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="logo">🏛️</div>
+        <div class="error-code">404</div>
+        <h1 class="error-title">Halaman Tidak Ditemukan</h1>
+        <p class="error-message">
+            Maaf, halaman yang Anda cari tidak dapat ditemukan. 
+            Mungkin halaman tersebut telah dipindahkan atau tidak tersedia.
+        </p>
+        <a href="/" class="btn-home">🏠 Kembali ke Beranda</a>
+        <button onclick="history.back()" class="btn-back">⬅️ Halaman Sebelumnya</button>
+    </div>
+    
+    <script>
+        // Auto redirect after 10 seconds
+        setTimeout(function() {
+            window.location.href = '/';
+        }, 10000);
+    </script>
+</body>
+</html>
